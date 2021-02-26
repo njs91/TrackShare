@@ -7,6 +7,23 @@ class UserType(DjangoObjectType):
         model = get_user_model() # how we access user model
         # could use this to specify specific fields to use: only_fields = ('id', 'email', 'password', 'username')
 
+#query for querying users based on id
+class Query(graphene.ObjectType):
+    user = graphene.Field(UserType, id=graphene.Int(required=True)) # need to pass an ID so can query it by that
+    me = graphene.Field(UserType) # me gives info about the current user
+
+    #the resolver
+    def resolve_user(self, info, id):
+        return get_user_model().objects.get(id=id)
+
+    #me resolver
+    def resolve_me(self, info):
+        user = info.context.user # info is a context value to check if user is authenticated
+        if user.is_anonymous: # if user is not authenticated
+            raise Exception('User is not logged in')
+
+        return user # (if user is authenticated)
+
 #mutation for creating new user
 class CreateUser(graphene.Mutation):
     user = graphene.Field(UserType)
