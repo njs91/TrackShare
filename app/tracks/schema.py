@@ -31,5 +31,51 @@ class CreateTrack(graphene.Mutation):
         track.save()
         return CreateTrack(track=track)
 
+class UpdateTrack(graphene.Mutation):
+    track = graphene.Field(TrackType) # all fields supplied by TrackType
+
+    class Arguments:
+        track_id = graphene.Int(required=True) # needed to know which track to update
+        title = graphene.String()
+        description = graphene.String()
+        url = graphene.String()
+
+    def mutate(self, info, track_id, title, url, description):
+        user = info.context.user #grab current user from context
+        track = Track.objects.get(id=track_id) #find individual track, according to its track_id
+
+        if track.posted_by != user: #ensure user updating track created it
+            raise Exception("This user didn't create the track and is therefore unauthorised to update it")
+
+        #otherwise make the changes:
+        track.title = title
+        track.description = description
+        track.url = url
+
+        track.save()
+
+        return UpdateTrack(track=track)
+
+
+class DeleteTrack(graphene.Mutation): #deleting a track needs to return id of deleted track
+    track_id = graphene.Int()
+
+    class Arguments:
+        track_id = graphene.Int(required=True)
+
+    def mutate(self, info, track_id): #the resolver
+        user = info.context.user
+        track = Track.objects.get(id=track_id)  # get the track id
+
+        if track.posted_by != user:#check if the user deleting it created it
+            raise Exception("This user didn't create the track and is therefore unauthorised to delete it")
+
+        track.delete()
+
+        return DeleteTrack(track_id=track_id)
+
+
 class Mutation(graphene.ObjectType):
     create_track = CreateTrack.Field()
+    update_track = UpdateTrack.Field()
+    delete_track = DeleteTrack.Field()
