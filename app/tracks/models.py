@@ -14,3 +14,8 @@ class Track(models.Model):
 
 # each track should have a title, created_at and optional description
 # id also added automatically
+
+class Like(models.Model): #likes modelled by like class; 'models.Model' created a db table
+    user = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE) #'who' liked something
+    track = models.ForeignKey('tracks.Track', related_name='likes', on_delete=models.CASCADE) #'tracks.Track' = tracks model; related_name gives each track info of their likes (called 'likes')
+
