@@ -1,5 +1,5 @@
-import React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 // import IconButton from "@material-ui/core/IconButton";
 // import EditIcon from "@material-ui/icons/Edit";
 // import Button from "@material-ui/core/Button";
@@ -18,33 +18,33 @@ const UpdateTrack = ({ classes }) => {
   return <div>UpdateTrack</div>;
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   dialog: {
-    margin: "0 auto",
-    maxWidth: 550
+    margin: '0 auto',
+    maxWidth: 550,
   },
   textField: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   cancel: {
-    color: "red"
+    color: 'red',
   },
   save: {
-    color: "green"
+    color: 'green',
   },
   button: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit * 2,
   },
   icon: {
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing.unit,
   },
   input: {
-    display: "none"
-  }
+    display: 'none',
+  },
 });
 
 export default withStyles(styles)(UpdateTrack);

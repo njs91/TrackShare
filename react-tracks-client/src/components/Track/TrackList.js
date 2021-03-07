@@ -1,5 +1,5 @@
-import React from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
 // import ListItemText from "@material-ui/core/ListItemText";
@@ -14,19 +14,19 @@ const TrackList = ({ classes }) => <div>TrackList</div>;
 
 const styles = {
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   details: {
-    alignItems: "center"
+    alignItems: 'center',
   },
   link: {
-    color: "#424242",
-    textDecoration: "none",
-    "&:hover": {
-      color: "black"
-    }
-  }
+    color: '#424242',
+    textDecoration: 'none',
+    '&:hover': {
+      color: 'black',
+    },
+  },
 };
 
 export default withStyles(styles)(TrackList);
