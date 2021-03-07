@@ -11,12 +11,17 @@ Project comprises of a front-end app using react and a back-end app using python
 Execute these commands:
 
 ```
+pipenv install
+```
+
+```
 pipenv shell
 ```
 
 ```
 python manage.py runserver
 ```
+
 Run the above command from within the app folder.
 
 **Installing the front-end app**:
@@ -26,6 +31,7 @@ Install with:
 ```
 npm install
 ```
+
 Run with:
 
 ```
