@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
  import { Mutation } from 'react-apollo' // so we can execute mutations
  import { gql } from 'apollo-boost'
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -19,6 +19,22 @@ import withStyles from "@material-ui/core/styles/withStyles";
  import VerifiedUserTwoTone from "@material-ui/icons/VerifiedUserTwoTone";
 
 const Register = ({ classes }) => {
+const [username, setUsername] = useState("")
+const [email, setEmail] = useState("")
+const [password, setPassword] = useState("")
+
+const handleSubmit = async (e, createUser) => {
+    e.preventDefault(); // prevents page refreshing on submit to prevent excess server strain
+    const res = await createUser({
+        variables: {
+            username, // same as username: username,
+            email,
+            password
+        }
+    });
+    console.log('res', res);
+}
+
   return (
   <div className={classes.root}>
   <Paper className={classes.paper}>
@@ -26,32 +42,43 @@ const Register = ({ classes }) => {
   <Gavel/>
   </Avatar>
   <Typography variant="headline">Register</Typography>
-{/*  <Mutation>
-  {() => {
-  return (*/}
-  <form className={classes.form}>
+<Mutation mutation={REGISTER_MUTATION}>
+  {(createUser, {loading, error}) => {
+  return (
+  <form className={classes.form} onSubmit = {(e) => handleSubmit(e, createUser)}>
     <FormControl required margin="normal" fullWidth>
-        <InputLabel htmlfor="username">Username</InputLabel>
-        <Input id="username"/>
+        <InputLabel htmlFor="username">Username</InputLabel>
+        <Input id="username" onChange={e => setUsername(e.target.value)}/>
     </FormControl>
     <FormControl required margin="normal" fullWidth>
-        <InputLabel htmlfor="email">Email</InputLabel>
-        <Input id="email" type="email"/>
+        <InputLabel htmlFor="email">Email</InputLabel>
+        <Input id="email" type="email" onChange={e => setEmail(e.target.value)}/>
     </FormControl>
     <FormControl required margin="normal" fullWidth>
-        <InputLabel htmlfor="password">Password</InputLabel>
-        <Input id="password" type="password"/>
+        <InputLabel htmlFor="password">Password</InputLabel>
+        <Input id="password" type="password" onChange={e => setPassword(e.target.value)}/>
     </FormControl>
     <Button className={classes.submit} type="submit" fullWidth variant="contained" color="secondary">Register</Button>
     <Button color="primary" fullWidth variant="outlined">Previous user? Log in here</Button>
   </form>
-{/*  )
+  )
   }}
-  </Mutation>*/}
+  </Mutation>
   </Paper>
   </div>
   )
 };
+
+const REGISTER_MUTATION = gql`
+mutation createUser($email: String!, $password: String!, $username: String!) {
+  createUser(username: $username, email: $email, password: $password) {
+    user {
+      username
+      email
+    }
+  }
+}
+`
 
 const styles = theme => ({
   root: {
