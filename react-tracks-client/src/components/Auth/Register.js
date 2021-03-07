@@ -18,10 +18,11 @@ import Slide from '@material-ui/core/Slide';
 import Gavel from '@material-ui/icons/Gavel';
 import VerifiedUserTwoTone from '@material-ui/icons/VerifiedUserTwoTone';
 
-const Register = ({ classes }) => {
+const Register = ({ classes, setNewUser }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [open, setOpen] = useState(false); // turns true when registered
 
   const handleSubmit = async (e, createUser) => {
     e.preventDefault(); // prevents page refreshing on submit to prevent excess server strain
@@ -33,6 +34,7 @@ const Register = ({ classes }) => {
       },
     });
     console.log('res', res);
+    setOpen(true);
   };
 
   return (
@@ -73,20 +75,50 @@ const Register = ({ classes }) => {
                 </FormControl>
                 <Button
                   className={classes.submit}
+                  disabled={
+                    loading ||
+                    !username.trim() ||
+                    !email.trim() ||
+                    !password.trim()
+                  }
                   type='submit'
                   fullWidth
                   variant='contained'
                   color='secondary'>
-                  Register
+                  {loading ? 'Registering...' : 'Register'}
                 </Button>
-                <Button color='primary' fullWidth variant='outlined'>
+                <Button
+                  onClick={() => setNewUser(false)}
+                  color='primary'
+                  fullWidth
+                  variant='outlined'>
                   Previous user? Log in here
                 </Button>
+                {error && <div>Error</div>}
               </form>
             );
           }}
         </Mutation>
       </Paper>
+
+      <Dialog open={open} disableBackdropClick={true}>
+        {/* only opens when open prop is true */}
+        <DialogTitle>
+          <VerifiedUserTwoTone className={classes.icon} />
+          New Account
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>User created successfully</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            color='primary'
+            varient='contained'
+            onClick={() => setNewUser(false)}>
+            Login
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
