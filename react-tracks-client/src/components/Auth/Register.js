@@ -94,7 +94,6 @@ const Register = ({ classes, setNewUser }) => {
                   variant='outlined'>
                   Previous user? Log in here
                 </Button>
-                {error && <div>Error</div>}
               </form>
             );
           }}

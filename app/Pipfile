@@ -8,6 +8,7 @@ django = "*"
 django-graphql-jwt = "*"
 pyjwt = "*"
 django-cors-headers = "*"
+graphene-django = "*"
 
 [requires]
 python_version = "3.8"
