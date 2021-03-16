@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 // import AudiotrackIcon from "@material-ui/icons/AudiotrackTwoTone";
 // import Divider from "@material-ui/core/Divider";
 
-const Profile = ({ classes }) => {
+export const Profile = ({ classes }) => {
   return <div>Profile</div>;
 };
 
