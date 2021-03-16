@@ -6,12 +6,14 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { App } from './pages/App';
 import { Profile } from './pages/Profile';
 import Header from './components/Shared/Header'
+import Loading from './components/Shared/Loading'
+import Error from './components/Shared/Error'
 
 const Root = () => (
   <Query query={ME_QUERY}>
     {({ data, loading, error }) => {
-      if (loading) return <div>loading</div>;
-      if (error) return <div>error</div>;
+      if (loading) return <Loading/>;
+      if (error) return <Error error={error}/>;
       const user = data.me;
 
       return (
