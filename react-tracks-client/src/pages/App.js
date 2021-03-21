@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import SearchTracks from "../components/Track/SearchTracks";
 import TrackList from "../components/Track/TrackList";
@@ -8,15 +8,18 @@ import { gql } from 'apollo-boost'
 import { Loading } from  '../components/Shared/Loading'
 
 export const App = ({ classes }) => {
+    const [searchResults, setSearchResults] = useState([]);
+
   return (
     <div className={styles.container}>
-	    <SearchTracks />
+	    <SearchTracks setSearchResults={setSearchResults} />
 	    <CreateTrack />
 {
         <Query query={GET_TRACKS}>
             {({ data, loading, error }) => {
                   if (loading) return <Loading />
-                  return <TrackList tracks={data.tracks} />
+                  const tracks = searchResults.length > 0 ? searchResults : data.tracks // data variable overridden by search results if any
+                  return <TrackList tracks={tracks} />
             }}
         </Query>}
     </div>
