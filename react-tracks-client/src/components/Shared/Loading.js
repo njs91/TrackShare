@@ -2,10 +2,13 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
  import CircularProgress from "@material-ui/core/CircularProgress";
 
-const Loading = ({ classes }) => (
-    <div className={classes.root}>
-        <CircularProgress className={classes.progress}/>
-    </div>);
+export const Loading = ({ classes }) => (<>
+    <div>Loading...</div>
+    {/*<div className={classes.root}>
+        {CircularProgress className={styles.progress}/>}
+        Loading...
+    </div>);*/}
+    </>)
 
 const styles = (theme) => ({
   root: {
