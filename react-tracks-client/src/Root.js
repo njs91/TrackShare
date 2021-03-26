@@ -39,6 +39,11 @@ export const ME_QUERY = gql`
       id
       username
       email
+      likeSet {
+        track {
+            id
+        }
+      }
     }
   }
 `;
