@@ -17,11 +17,12 @@ const Root = () => (
       if (loading) return <Loading/>;
       if (error) return <Error error={error}/>;
       const currentUser = data.me;
+      console.log('from root currentUser', currentUser)
 
       return (
       <Router>
          <UserContext.Provider value={currentUser}>
-            <Header user={currentUser}/>
+            <Header currentUser={currentUser}/>
             <Switch>
                 <Route exact path="/" component={App} />
                 <Route path="/profile/:id" component={Profile} />

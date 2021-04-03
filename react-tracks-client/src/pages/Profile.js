@@ -11,13 +11,14 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUpTwoTone";
 import AudiotrackIcon from "@material-ui/icons/AudiotrackTwoTone";
 import Divider from "@material-ui/core/Divider";
 import format from "date-fns/format";
-
 import AudioPlayer from "../components/Shared/AudioPlayer";
 import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
+import UserContext from "../Root";
 
 export const Profile = ({ classes, match }) => {
   const id = match.params.id;
+
   return (
     <Query query={PROFILE_QUERY} variables={{ id }}>
       {({ data, loading, error }) => {
@@ -25,7 +26,7 @@ export const Profile = ({ classes, match }) => {
         if (error) return <Error error={error} />;
 
         return (
-          <div>
+          <div  style={{'maxWidth': '1200px', 'margin': '0 auto'}}>
             {/* User Info Card */}
             {<Card className={styles.card}>
               <CardHeader
@@ -37,6 +38,14 @@ export const Profile = ({ classes, match }) => {
                 )}`}
               />
             </Card>}
+
+            <div>
+                <ul>
+                    <li>ID: {data.user.id}</li>
+                    <li>Username: {data.user.username}</li>
+                    <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
+                </ul>
+            </div>
 
             {/* Created Tracks */}
             <Paper elevation={1} className={styles.paper}>

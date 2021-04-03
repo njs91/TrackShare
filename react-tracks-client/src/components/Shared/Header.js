@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
