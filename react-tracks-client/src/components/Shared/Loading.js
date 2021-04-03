@@ -1,6 +1,5 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
- import CircularProgress from "@material-ui/core/CircularProgress";
 
 export const Loading = ({ classes }) => (<>
     <div>Loading...</div>

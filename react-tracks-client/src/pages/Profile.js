@@ -5,16 +5,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import ThumbUpIcon from "@material-ui/icons/ThumbUpTwoTone";
 import AudiotrackIcon from "@material-ui/icons/AudiotrackTwoTone";
-import Divider from "@material-ui/core/Divider";
 import format from "date-fns/format";
 import AudioPlayer from "../components/Shared/AudioPlayer";
 import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
-import UserContext from "../Root";
 
 export const Profile = ({ classes, match }) => {
   const id = match.params.id;
@@ -40,6 +36,7 @@ export const Profile = ({ classes, match }) => {
             </Card>}
 
             <div style={{'margin': '2rem 0', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
+                <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>User Info:</span>
                 <ul>
                     <li>ID: {data.user.id}</li>
                     <li>Username: {data.user.username}</li>
@@ -51,35 +48,37 @@ export const Profile = ({ classes, match }) => {
             <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
               <div style={{'padding': '0 0 1em 0'}}>
                 <AudiotrackIcon className={styles.audioIcon} />
-                <span style={{'padding': '0 .5em'}}>Created Tracks</span>
+                <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>Created Tracks:</span>
               </div>
-              {data.user.trackSet.map(track => (
+              {data.user.trackSet.length ? data.user.trackSet.map(track => (
                 <div key={track.id}>
                   <div>
                     {track.title} · {track.likes.length} Likes
                   </div>
+                  <div style={{'padding': '.5rem 0'}} />
                   <AudioPlayer url={track.url} />
                   <div style={{'padding': '.5rem 0'}} />
                 </div>
-              ))}
+              )) : 'None'}
             </div>
 
             {/* Liked Tracks */}
             <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em', 'margin': '2rem 0'}}>
               <div style={{'padding': '0 0 1em 0'}}>
                 <ThumbUpIcon />
-                <span style={{'padding': '0 .5em'}}>Liked Tracks</span>
+                <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>Liked Tracks:</span>
               </div>
-              {data.user.likeSet.map(({ track }) => (
+              {data.user.likeSet.length ? data.user.likeSet.map(({ track }) => (
                 <div key={track.id}>
                   <div>
                     {track.title} · {track.likes.length} Likes ·{" "}
                     {track.postedBy.username}
                   </div>
+                  <div style={{'padding': '.5rem 0'}} />
                   <AudioPlayer url={track.url} />
                   <div style={{'padding': '.5rem 0'}} />
                 </div>
-              ))}
+              )): 'None'}
             </div>
           </div>
         );

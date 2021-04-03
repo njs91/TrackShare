@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,7 +16,7 @@ const Header = ({ classes, currentUser }) => {
         <Link to="/" className={classes.grow}>
           <RadioIcon className={classes.logo} color="secondary" />
           <Typography variant="headline" color="secondary" noWrap>
-            ReactTracks
+            TrackShare
           </Typography>
         </Link>
 
@@ -25,7 +25,7 @@ const Header = ({ classes, currentUser }) => {
           <Link to={`/profile/${currentUser.id}`} className={classes.grow}>
             <FaceIcon className={classes.faceIcon} />
             <Typography variant="headline" className={classes.username} noWrap>
-              {currentUser.username}
+              View {currentUser.username}'s Profile
             </Typography>
           </Link>
         )}

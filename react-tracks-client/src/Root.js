@@ -17,7 +17,6 @@ const Root = () => (
       if (loading) return <Loading/>;
       if (error) return <Error error={error}/>;
       const currentUser = data.me;
-      console.log('from root currentUser', currentUser)
 
       return (
       <Router>

@@ -14,7 +14,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
 import Gavel from '@material-ui/icons/Gavel';
 import VerifiedUserTwoTone from '@material-ui/icons/VerifiedUserTwoTone';
 
@@ -26,14 +25,13 @@ const Register = ({ classes, setNewUser }) => {
 
   const handleSubmit = async (e, createUser) => {
     e.preventDefault(); // prevents page refreshing on submit to prevent excess server strain
-    const res = await createUser({
+    await createUser({
       variables: {
         username, // same as username: username,
         email,
         password,
       },
     });
-    console.log('res', res);
     setOpen(true);
   };
 
