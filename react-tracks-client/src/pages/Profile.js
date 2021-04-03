@@ -26,7 +26,7 @@ export const Profile = ({ classes, match }) => {
         if (error) return <Error error={error} />;
 
         return (
-          <div  style={{'maxWidth': '1200px', 'margin': '0 auto'}}>
+          <div style={{'maxWidth': '1200px', 'margin': '1rem auto 0 auto'}}>
             {/* User Info Card */}
             {<Card className={styles.card}>
               <CardHeader
@@ -39,7 +39,7 @@ export const Profile = ({ classes, match }) => {
               />
             </Card>}
 
-            <div>
+            <div style={{'margin': '2rem 0', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
                 <ul>
                     <li>ID: {data.user.id}</li>
                     <li>Username: {data.user.username}</li>
@@ -48,39 +48,39 @@ export const Profile = ({ classes, match }) => {
             </div>
 
             {/* Created Tracks */}
-            <Paper elevation={1} className={styles.paper}>
-              <Typography variant="title" className={styles.title}>
+            <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
+              <div style={{'padding': '0 0 1em 0'}}>
                 <AudiotrackIcon className={styles.audioIcon} />
-                Created Tracks
-              </Typography>
+                <span style={{'padding': '0 .5em'}}>Created Tracks</span>
+              </div>
               {data.user.trackSet.map(track => (
                 <div key={track.id}>
-                  <Typography>
+                  <div>
                     {track.title} · {track.likes.length} Likes
-                  </Typography>
+                  </div>
                   <AudioPlayer url={track.url} />
-                  <Divider className={styles.divider} />
+                  <div style={{'padding': '.5rem 0'}} />
                 </div>
               ))}
-            </Paper>
+            </div>
 
             {/* Liked Tracks */}
-            <Paper elevation={1} className={styles.paper}>
-              <Typography variant="title" className={styles.title}>
-                <ThumbUpIcon className={styles.thumbIcon} />
-                Liked Tracks
-              </Typography>
+            <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em', 'margin': '2rem 0'}}>
+              <div style={{'padding': '0 0 1em 0'}}>
+                <ThumbUpIcon />
+                <span style={{'padding': '0 .5em'}}>Liked Tracks</span>
+              </div>
               {data.user.likeSet.map(({ track }) => (
                 <div key={track.id}>
-                  <Typography>
+                  <div>
                     {track.title} · {track.likes.length} Likes ·{" "}
                     {track.postedBy.username}
-                  </Typography>
+                  </div>
                   <AudioPlayer url={track.url} />
-                  <Divider className={styles.divider} />
+                  <div style={{'padding': '.5rem 0'}} />
                 </div>
               ))}
-            </Paper>
+            </div>
           </div>
         );
       }}
