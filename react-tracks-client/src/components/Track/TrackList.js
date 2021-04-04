@@ -18,6 +18,7 @@ import UpdateTrack from "./UpdateTrack";
 
 const TrackList = ({ classes, tracks }) => (
   <List>
+    {console.log('tracks', tracks)}
     {tracks.map(track => (
       <ExpansionPanel key={track.id}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

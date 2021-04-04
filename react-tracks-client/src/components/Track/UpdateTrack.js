@@ -26,6 +26,7 @@ const UpdateTrack = ({ classes, track }) => {
   const [description, setDescription] = useState(track.description);
   const [artist, setArtist] = useState(track.artist);
   const [file, setFile] = useState("");
+//  const [file, setFile] = useState(track.url);
   const [submitting, setSubmitting] = useState(false);
   const [fileError, setFileError] = useState("");
   const isCurrentUser = currentUser.id === track.postedBy.id;
@@ -138,6 +139,7 @@ const UpdateTrack = ({ classes, track }) => {
                         accept="audio/mp3,audio/wav"
                         className={classes.input}
                         onChange={handleAudioChange}
+//                        value={file}
                       />
                       <label htmlFor="audio">
                         <Button

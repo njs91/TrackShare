@@ -112,7 +112,7 @@ const CreateTrack = ({ classes }) => {
                   </DialogContentText>
                   <FormControl fullWidth>
                     <TextField
-                      label="Title"
+                      label="*Title"
                       placeholder="Add Title"
                       onChange={event => setTitle(event.target.value)}
                       value={title}
@@ -123,7 +123,7 @@ const CreateTrack = ({ classes }) => {
                     <TextField
                       multiline
                       rows="4"
-                      label="Description"
+                      label="*Description"
                       placeholder="Add Description"
                       onChange={event => setDescription(event.target.value)}
                       value={description}
@@ -155,7 +155,7 @@ const CreateTrack = ({ classes }) => {
                         component="span"
                         className={classes.button}
                       >
-                        Audio File
+                        *Audio File
                         <LibraryMusicIcon className={classes.icon} />
                       </Button>
                       {file && file.name}
@@ -176,7 +176,6 @@ const CreateTrack = ({ classes }) => {
                       submitting ||
                       !title.trim() ||
                       !description.trim() ||
-                      !artist.trim() ||
                       !file
                     }
                     type="submit"
