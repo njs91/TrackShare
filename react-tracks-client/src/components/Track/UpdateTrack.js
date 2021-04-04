@@ -104,7 +104,7 @@ const UpdateTrack = ({ classes, track }) => {
                     </DialogContentText>
                     <FormControl fullWidth>
                       <TextField
-                        label="Title"
+                        label="*Title"
                         placeholder="Add Title"
                         onChange={event => setTitle(event.target.value)}
                         value={title}
@@ -115,7 +115,7 @@ const UpdateTrack = ({ classes, track }) => {
                       <TextField
                         multiline
                         rows="4"
-                        label="Description"
+                        label="*Description"
                         placeholder="Add Description"
                         onChange={event => setDescription(event.target.value)}
                         value={description}
@@ -148,7 +148,7 @@ const UpdateTrack = ({ classes, track }) => {
                           component="span"
                           className={classes.button}
                         >
-                          Audio File
+                          *Audio File
                           <LibraryMusicIcon className={classes.icon} />
                         </Button>
                         {file && file.name}
@@ -169,7 +169,6 @@ const UpdateTrack = ({ classes, track }) => {
                         submitting
                         || !title.trim() ||
                         !description.trim() ||
-                        !artist.trim() ||
                         !file
                       }
                       type="submit"
