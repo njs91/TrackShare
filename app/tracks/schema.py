@@ -19,13 +19,13 @@ class Query(graphene.ObjectType):
 
     def resolve_tracks(self, info, search=None): #=None is the fallback value; makes optional to prevent error
         if search: #if search text is provided
-            filter = {
+            filter = (
                 Q(title__icontains=search) |
                 Q(description__icontains=search) |
                 Q(artist__icontains=search) |
                 Q(url__icontains=search) |
                 Q(posted_by__username__icontains=search)
-            }
+            )
             return Track.objects.filter(filter)
 
         return Track.objects.all()

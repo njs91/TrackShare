@@ -19,11 +19,16 @@ const SearchTracks = ({ classes, setSearchResults }) => {
   };
 
   const handleSubmit = async (event, client) => {
+    console.log('search', search);
     event.preventDefault();
+    console.log('test')
     const res = await client.query({
       query: SEARCH_TRACKS_QUERY,
-      variables: { search }
+      variables: {search} // error?
+//      variables: [ search ] // error?
+//      variables: { search }  // error?
     });
+    console.log('res', res);
     setSearchResults(res.data.tracks);
   };
 
