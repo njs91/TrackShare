@@ -42,7 +42,7 @@ const TrackList = ({ classes, tracks }) => (
           </ListItem>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <Typography variant="body1">{track.description}</Typography>
+          <Typography variant="body1">{track.artist && <>Artist: {track.artist} <br/></>}{track.description}</Typography>
         </ExpansionPanelDetails>
         <ExpansionPanelActions>
           <UpdateTrack track={track} />

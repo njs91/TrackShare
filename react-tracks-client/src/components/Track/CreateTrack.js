@@ -24,6 +24,7 @@ const CreateTrack = ({ classes }) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [artist, setArtist] = useState("");
   const [file, setFile] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [fileError, setFileError] = useState("");
@@ -68,7 +69,7 @@ const CreateTrack = ({ classes }) => {
     setSubmitting(true);
     // upload our audio file, get returned url from API
     const uploadedUrl = await handleAudioUpload();
-    createTrack({ variables: { title, description, url: uploadedUrl } });
+    createTrack({ variables: { title, description, artist, url: uploadedUrl } });
   };
 
   return (
@@ -92,6 +93,7 @@ const CreateTrack = ({ classes }) => {
           setOpen(false);
           setTitle("");
           setDescription("");
+          setArtist("");
           setFile("");
         }}
         update={handleUpdateCache}
@@ -106,7 +108,7 @@ const CreateTrack = ({ classes }) => {
                 <DialogTitle>Create Track</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Add a Title, Description & Audio File (Under 10MB)
+                    Add a Title, Description, Artist & Audio File (Under 10MB)
                   </DialogContentText>
                   <FormControl fullWidth>
                     <TextField
@@ -125,6 +127,15 @@ const CreateTrack = ({ classes }) => {
                       placeholder="Add Description"
                       onChange={event => setDescription(event.target.value)}
                       value={description}
+                      className={classes.textField}
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Artist"
+                      placeholder="Add Artist"
+                      onChange={event => setArtist(event.target.value)}
+                      value={artist}
                       className={classes.textField}
                     />
                   </FormControl>
@@ -165,6 +176,7 @@ const CreateTrack = ({ classes }) => {
                       submitting ||
                       !title.trim() ||
                       !description.trim() ||
+                      !artist.trim() ||
                       !file
                     }
                     type="submit"
@@ -187,12 +199,13 @@ const CreateTrack = ({ classes }) => {
 };
 
 const CREATE_TRACK_MUTATION = gql`
-  mutation($title: String!, $description: String!, $url: String!) {
-    createTrack(title: $title, description: $description, url: $url) {
+  mutation($title: String!, $description: String!, $artist: String!, $url: String!) {
+    createTrack(title: $title, description: $description, artist: $artist, url: $url) {
       track {
         id
         title
         description
+        artist
         url
         likes {
           id

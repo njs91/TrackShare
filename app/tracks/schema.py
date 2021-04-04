@@ -22,6 +22,7 @@ class Query(graphene.ObjectType):
             filter = {
                 Q(title__icontains=search) |
                 Q(description__icontains=search) |
+                Q(artist__icontains=search) |
                 Q(url__icontains=search) |
                 Q(posted_by__username__icontains=search)
             }
@@ -38,13 +39,14 @@ class CreateTrack(graphene.Mutation):
     class Arguments:
         title = graphene.String()
         description = graphene.String()
+        artist = graphene.String()
         url = graphene.String()
 
-    def mutate(self, info, title, description, url):
+    def mutate(self, info, title, description, artist, url):
         user = info.context.user
         if user.is_anonymous: # if user not logged in / authenticated
             raise GraphQLError('Log in to add a track')
-        track = Track(title=title, description=description, url=url, posted_by=user)
+        track = Track(title=title, description=description, artist=artist, url=url, posted_by=user)
         track.save()
         return CreateTrack(track=track)
 
@@ -55,9 +57,10 @@ class UpdateTrack(graphene.Mutation):
         track_id = graphene.Int(required=True) # needed to know which track to update
         title = graphene.String()
         description = graphene.String()
+        artist = graphene.String()
         url = graphene.String()
 
-    def mutate(self, info, track_id, title, url, description):
+    def mutate(self, info, track_id, title, url, description, artist):
         user = info.context.user #grab current user from context
         track = Track.objects.get(id=track_id) #find individual track, according to its track_id
 
@@ -67,6 +70,7 @@ class UpdateTrack(graphene.Mutation):
         #otherwise make the changes:
         track.title = title
         track.description = description
+        track.artist = artist
         track.url = url
 
         track.save()

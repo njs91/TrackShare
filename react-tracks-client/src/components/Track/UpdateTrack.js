@@ -24,6 +24,7 @@ const UpdateTrack = ({ classes, track }) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(track.title);
   const [description, setDescription] = useState(track.description);
+  const [artist, setArtist] = useState(track.artist);
   const [file, setFile] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [fileError, setFileError] = useState("");
@@ -64,7 +65,7 @@ const UpdateTrack = ({ classes, track }) => {
     // upload our audio file, get returned url from API
     const uploadedUrl = await handleAudioUpload();
     updateTrack({
-      variables: { trackId: track.id, title, description, url: uploadedUrl }
+      variables: { trackId: track.id, title, description, artist, url: uploadedUrl }
     });
   };
 
@@ -85,6 +86,7 @@ const UpdateTrack = ({ classes, track }) => {
             setOpen(false);
             setTitle("");
             setDescription("");
+            setArtist("");
             setFile("");
           }}
         >
@@ -97,7 +99,7 @@ const UpdateTrack = ({ classes, track }) => {
                   <DialogTitle>Update Track</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
-                      Add a Title, Description & Audio File (Under 10MB)
+                      Add a Title, Description, Artist & Audio File (Under 10MB)
                     </DialogContentText>
                     <FormControl fullWidth>
                       <TextField
@@ -116,6 +118,15 @@ const UpdateTrack = ({ classes, track }) => {
                         placeholder="Add Description"
                         onChange={event => setDescription(event.target.value)}
                         value={description}
+                        className={classes.textField}
+                      />
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <TextField
+                        label="Artist"
+                        placeholder="Add Artist"
+                        onChange={event => setArtist(event.target.value)}
+                        value={artist}
                         className={classes.textField}
                       />
                     </FormControl>
@@ -153,9 +164,10 @@ const UpdateTrack = ({ classes, track }) => {
                     </Button>
                     <Button
                       disabled={
-                        submitting ||
-                        !title.trim() ||
+                        submitting
+                        || !title.trim() ||
                         !description.trim() ||
+                        !artist.trim() ||
                         !file
                       }
                       type="submit"
@@ -179,17 +191,19 @@ const UpdateTrack = ({ classes, track }) => {
 };
 
 const UPDATE_TRACK_MUTATION = gql`
-  mutation($trackId: Int!, $title: String, $url: String, $description: String) {
+  mutation($trackId: Int!, $title: String, $url: String, $description: String, $artist: String) {
     updateTrack(
       trackId: $trackId
       title: $title
       url: $url
       description: $description
+      artist: $artist
     ) {
       track {
         id
         title
         description
+        artist
         url
         likes {
           id

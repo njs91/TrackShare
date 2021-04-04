@@ -61,6 +61,7 @@ const SEARCH_TRACKS_QUERY = gql`
       id
       title
       description
+      artist
       url
       likes {
         id

@@ -32,6 +32,7 @@ export const GET_TRACKS = gql`
             id
             title
             description
+            artist
             url
             likes {
                 id
