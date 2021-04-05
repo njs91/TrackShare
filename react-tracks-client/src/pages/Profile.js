@@ -12,16 +12,11 @@ import AudioPlayer from "../components/Shared/AudioPlayer";
 import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
 import { UserContext } from "../Root";
+import EditAccountModal from "../components/Profile/EditAccountModal";
 
 export const Profile = ({ classes, match }) => {
   const id = match.params.id;
   const currentUser = useContext(UserContext);
-
-  const handleEditAccount = () => {
-  //@todo: create form to edit account details
-    console.log('edit account Fn');
-    alert('to do');
-  }
 
   return (
     <Query query={PROFILE_QUERY} variables={{ id }}>
@@ -53,7 +48,7 @@ export const Profile = ({ classes, match }) => {
                     <li>Username: {data.user.username}</li>
                     <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
                 </ul>
-                <button onClick={handleEditAccount}>Edit Account</button>
+                <EditAccountModal/>
             </div>
 
             {/* Created Tracks */}
