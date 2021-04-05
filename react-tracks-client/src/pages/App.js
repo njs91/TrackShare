@@ -12,6 +12,7 @@ export const App = ({ classes }) => {
 
   return (
     <div className={styles.container}>
+        <h1 style={{'marginLeft': '1em'}}>Home</h1>
 	    <SearchTracks setSearchResults={setSearchResults} />
 	    <CreateTrack />
 {

@@ -1,8 +1,10 @@
-# Demo Full-stack App
+# TrackShare Full-stack App
 
 ## Introduction
 
-Project comprises of a front-end app using react and a back-end app using python. Both ends communicate via a GraphQL API.
+Full-stack project that comprises of a front-end app using react and a back-end app using python. Both ends communicate via a GraphQL API.
+
+Create an account and upload, play, search for and like music files.
 
 ## Installation
 
@@ -25,6 +27,8 @@ python manage.py runserver
 Run the above command from within the app folder.
 
 **Installing the front-end app**:
+
+Navigate to the /root/react-tracks-client folder.
 
 Install with:
 

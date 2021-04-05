@@ -26,6 +26,7 @@ export const Profile = ({ classes, match }) => {
 
         return (
           <div style={{'maxWidth': '1200px', 'margin': '1rem auto 0 auto'}}>
+            <h1>{data.user.username}&#39;s Profile</h1>
             {data.user.id == currentUser.id && <p>This is your account.</p>}
             {/* User Info Card */}
             {<Card className={styles.card}>
@@ -48,7 +49,7 @@ export const Profile = ({ classes, match }) => {
                     <li>Username: {data.user.username}</li>
                     <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
                 </ul>
-                <EditAccountModal/>
+                <EditAccountModal user={data.user}/>
             </div>
 
             {/* Created Tracks */}

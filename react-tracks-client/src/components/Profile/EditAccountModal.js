@@ -16,7 +16,7 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-const EditAccountModal = () => {
+const EditAccountModal = ({user}) => {
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -37,6 +37,7 @@ const EditAccountModal = () => {
 
     return (
       <div>
+        {console.log('modal user', user)}
         <button onClick={openModal}>Edit Account</button>
         <Modal
           isOpen={modalIsOpen}
@@ -63,7 +64,7 @@ const EditAccountModal = () => {
                   <input id="email" name="email" {...register("email", { required: true })} />
                   {errors.email && <span>This field is required</span>}
               </div>
-              <input type="hidden" value="id_goes_here"/>{/* @todo: add userId value */}
+              <input type="hidden" value={user.id}/>
             <input type="submit" />
             <button onClick={closeModal}>close</button>
           </form>
