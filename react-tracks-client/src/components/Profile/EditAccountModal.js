@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { useForm } from "react-hook-form";
 
 const customStyles = {
   content : {
@@ -13,14 +14,14 @@ const customStyles = {
   }
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-//Modal.setAppElement('#yourAppElement')
 Modal.setAppElement('#root')
 
-//function App(){
 const EditAccountModal = () => {
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = data => console.log(data); // @todo: create onSubmit Fn
+
   function openModal() {
     setIsOpen(true);
   }
@@ -44,12 +45,27 @@ const EditAccountModal = () => {
           style={customStyles}
           contentLabel="Example Modal"
         >
-
-          <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2>
-          <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-
+          <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit Account</h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+              {/* use defaultValue attribute if necessary, i.e. defaultValue="test" */}
+              <div style={{'display': 'flex', 'flexDirection': 'column'}}>
+                  <label htmlFor="username">Username:</label>
+                  <input type="text" id="username" name="username" {...register("username", { required: true })} />
+                  {errors.username && <span>This field is required</span>}
+              </div>
+              <div style={{'display': 'flex', 'flexDirection': 'column'}}>
+                  <label htmlFor="password">Password:</label>
+                  <input type="text" id="password" name="password" {...register("password", { required: true })} />
+                  {errors.password && <span>This field is required</span>}
+              </div>
+              <div style={{'display': 'flex', 'flexDirection': 'column'}}>
+                  <label htmlFor="email">Email:</label>
+                  <input id="email" name="email" {...register("email", { required: true })} />
+                  {errors.email && <span>This field is required</span>}
+              </div>
+              <input type="hidden" value="id_goes_here"/>{/* @todo: add userId value */}
+            <input type="submit" />
+            <button onClick={closeModal}>close</button>
           </form>
         </Modal>
       </div>
