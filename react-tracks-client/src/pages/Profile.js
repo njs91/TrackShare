@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -11,9 +11,17 @@ import format from "date-fns/format";
 import AudioPlayer from "../components/Shared/AudioPlayer";
 import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
+import { UserContext } from "../Root";
 
 export const Profile = ({ classes, match }) => {
   const id = match.params.id;
+  const currentUser = useContext(UserContext);
+
+  const handleEditAccount = () => {
+  //@todo: create form to edit account details
+    console.log('edit account Fn');
+    alert('to do');
+  }
 
   return (
     <Query query={PROFILE_QUERY} variables={{ id }}>
@@ -23,8 +31,10 @@ export const Profile = ({ classes, match }) => {
 
         return (
           <div style={{'maxWidth': '1200px', 'margin': '1rem auto 0 auto'}}>
+            {data.user.id == currentUser.id && <p>This is your account.</p>}
             {/* User Info Card */}
             {<Card className={styles.card}>
+              {console.log('currentUser', currentUser)}
               <CardHeader
                 avatar={<Avatar>{data.user.username[0]}</Avatar>}
                 title={data.user.username}
@@ -43,6 +53,7 @@ export const Profile = ({ classes, match }) => {
                     <li>Username: {data.user.username}</li>
                     <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
                 </ul>
+                <button onClick={handleEditAccount}>Edit Account</button>
             </div>
 
             {/* Created Tracks */}
