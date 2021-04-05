@@ -44,8 +44,37 @@ class CreateUser(graphene.Mutation):
         user.save()
         return CreateUser(user=user)
 
+#mutation for updating user
+class UpdateUser(graphene.Mutation):
+    user = graphene.Field(UserType)
+
+    class Arguments:
+        user_id = graphene.Int(required=True) # needed to know which user to update
+        username = graphene.String() # add required=False?
+        password = graphene.String() # add required=False?
+        email = graphene.String() # add required=False?
+
+    def mutate(self, info, user_id, username, password, email):
+        user = info.context.user  # grab current user from context
+        user_to_update = get_user_model().objects.get(id=user_id)
+
+        #@todo: make account owner only allowed to edit account
+        # if user_to_update.id != user.id: #ensure user updating account owns it
+            #raise GraphQLError("This user does not own the account and is therefore unauthorised to update it")
+
+        #otherwise make the changes
+        user_to_update.username = username
+        user_to_update.set_password(password) #wrong = user_to_update.password = password
+        user_to_update.email = email
+
+        #save changes
+        user_to_update.save()
+
+        return UpdateUser(user=user_to_update)
+
 class Mutation(graphene.ObjectType):
-    create_user = CreateUser.Field() # error here?
+    create_user = CreateUser.Field()
+    update_user = UpdateUser.Field()
 
 
 

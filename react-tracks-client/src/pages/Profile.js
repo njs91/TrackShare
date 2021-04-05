@@ -38,6 +38,7 @@ export const Profile = ({ classes, match }) => {
             <div style={{'margin': '2rem 0', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
                 <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>User Info:</span>
                 <ul>
+                    {console.log('data', data)}
                     <li>ID: {data.user.id}</li>
                     <li>Username: {data.user.username}</li>
                     <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
@@ -93,6 +94,8 @@ const PROFILE_QUERY = gql`
       id
       username
       dateJoined
+      email
+      password
       likeSet {
         id
         track {
