@@ -32,6 +32,7 @@ export const Profile = ({ classes, match }) => {
           <div style={{'maxWidth': '1200px', 'margin': '1rem auto 0 auto'}}>
             <h1>{data.user.username}&#39;s Profile</h1>
             {data.user.id == currentUser.id && <p>This is your account.</p>}
+
             {/* User Info Card */}
             {<Card className={styles.card}>
               {console.log('currentUser', currentUser)}
@@ -45,19 +46,22 @@ export const Profile = ({ classes, match }) => {
               />
             </Card>}
 
-            <div style={{'margin': '2rem 0', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
+            {/* Standard Info */}
+            <div style={{'background':'white', 'margin': '2rem 0', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
                 <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>User Info:</span>
                 <ul>
                     {console.log('data', data)}
                     <li>ID: {data.user.id}</li>
                     <li>Username: {data.user.username}</li>
+                    <li>Email: {data.user.email}</li>
+                    <li>Liked Tracks: {data.user.likeSet.length}</li>
                     <li>Joined: {format(data.user.dateJoined, 'MMM Do, YYYY')}</li>
                 </ul>
                 {data.user.id == currentUser.id && <EditAccountModal user={data.user}/>}
             </div>
 
             {/* Created Tracks */}
-            <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
+            <div style={{'background':'white', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em'}}>
               <div style={{'padding': '0 0 1em 0'}}>
                 <AudiotrackIcon className={styles.audioIcon} />
                 <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>Created Tracks:</span>
@@ -75,7 +79,7 @@ export const Profile = ({ classes, match }) => {
             </div>
 
             {/* Liked Tracks */}
-            <div style={{'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em', 'margin': '2rem 0'}}>
+            <div style={{'background':'white', 'boxShadow': '0px 1px 3px 0px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 2px 1px -1px rgb(0 0 0 / 12%)', 'padding': '1.5em', 'borderRadius': '.5em', 'margin': '2rem 0'}}>
               <div style={{'padding': '0 0 1em 0'}}>
                 <ThumbUpIcon />
                 <span style={{'padding': '0 .5em', 'fontWeight': '700'}}>Liked Tracks:</span>

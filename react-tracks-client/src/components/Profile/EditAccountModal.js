@@ -34,8 +34,8 @@ Modal.setAppElement('#root')
 const EditAccountModal = ({user}) => {
   var subtitle;
   const [modalIsOpen,setIsOpen] = React.useState(false);
-  const { control, register, handleSubmit, watch, formState: { errors } } = useForm();
-  const [password, setPassword] = useState(user.password);
+  const { control, label, register, handleSubmit, watch, formState: { errors } } = useForm();
+  const [password, setPassword] = useState("");
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const submitFn = async (event, updateUser) => {
@@ -45,7 +45,6 @@ const EditAccountModal = ({user}) => {
     console.log('email', email);
     console.log('user.id', user.id);
     event.preventDefault();
-    // @todo: finish onSubmit Fn
     updateUser({
       variables: {
         email: email,
@@ -81,8 +80,7 @@ const EditAccountModal = ({user}) => {
         >
           {(updateUser, { loading, error }) => {
             // if (error) return <Error error={error} />;
-            {/* @todo: replace this crappy syntax */}
-            {/* @todo: needs serious refactoring */}
+            {/* @todo: replace this crappy syntax? */}
             return (
                 <Modal
                   isOpen={modalIsOpen}
@@ -92,43 +90,60 @@ const EditAccountModal = ({user}) => {
                   contentLabel="Example Modal"
                 >
                   <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit Account</h2>
-                  {/*<form onSubmit={handleSubmit(submitFn)}>*/}
-                  <form onSubmit={(event) => submitFn(event, updateUser)}>
+                  <form onSubmit={(event) => submitFn(event, updateUser)} style={{"display": "flex", "flexDirection": "column"}}>
                       {/* use defaultValue attribute if necessary, i.e. defaultValue="test" */}
-                      {/*<div style={{'display': 'flex', 'flexDirection': 'column'}}>
-                          <label htmlFor="username">Username:</label>
-                          <input onChange={event => {
-                            console.log('should change username', username)
-                            setUsername(event.target.value)
-                          }} value={username} type="text" id="username" name="username" {...register("username", { required: true })} />
-                          {errors.username && <span>This field is required</span>}
-                      </div>*/}
-                      it works >
                       <Controller
                         control={control}
-                        render={({ field: { onChange, value } }) => (
+                        render={({ field: { onChange, value } }) => (<>
+                          <label for="username">Username</label>
                           <input
+                            name="username"
+                            id="username"
                             onChange={event => {
-                            console.log('should change username', username)
                             setUsername(event.target.value)
                           }}
                             value={username}
                           />
-                        )}
+                        </>)}
                         name="username"
                         defaultValue={username}
                       />
-                      ^ it works
-                      <div style={{'display': 'flex', 'flexDirection': 'column'}}>
-                          <label htmlFor="password">Password:</label>
-                          <input onChange={event => setPassword(event.target.value)} value={password} type="text" id="password" name="password" {...register("password", { required: true })} />
-                          {errors.password && <span>This field is required</span>}
-                      </div>
-                      <div style={{'display': 'flex', 'flexDirection': 'column'}}>
-                          <label htmlFor="email">Email:</label>
-                          <input onChange={event => setEmail(event.target.value)} value={email} id="email" name="email" {...register("email", { required: true })} />
-                          {errors.email && <span>This field is required</span>}
-                      </div>
+                      {/* @todo: make password blank and required */}
+                      {/* @todo: clear authToken from local storage on submit */}
+                      <Controller
+                        control={control}
+                        render={({ field: { onChange, value } }) => (<>
+                          <label for="password">Password</label>
+                          <input
+                            name="password"
+                            id="password"
+                            type="text"
+                            onChange={event => {
+                            setPassword(event.target.value)
+                          }}
+                            value={password}
+                          />
+                        </>)}
+                        name="password"
+                        defaultValue={password}
+                      />
+                      <Controller
+                        control={control}
+                        render={({ field: { onChange, value } }) => (<>
+                          <label for="email">Email</label>
+                          <input
+                            name="email"
+                            id="email"
+                            type="text"
+                            onChange={event => {
+                            setEmail(event.target.value)
+                          }}
+                            value={email}
+                          />
+                        </>)}
+                        name="email"
+                        defaultValue={email}
+                      />
                       <input type="hidden" value={user.id}/>
                     <input type="submit" />
                     <button onClick={closeModal}>close</button>
@@ -137,7 +152,6 @@ const EditAccountModal = ({user}) => {
             );
           }}
         </Mutation>
-
       </div>
     );
 }
