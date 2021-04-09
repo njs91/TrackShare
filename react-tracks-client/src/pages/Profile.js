@@ -13,6 +13,7 @@ import Loading from "../components/Shared/Loading";
 import { UserContext } from "../Root";
 import EditAccountModal from "../components/Profile/EditAccountModal";
 import { PROFILE_QUERY } from "../gql/queries";
+import { Link } from "react-router-dom";
 
 export const Profile = ({match}) => {
   const id = match.params.id;
@@ -112,6 +113,16 @@ export const Profile = ({match}) => {
                 </div>
               )) : 'None'}
             </div>
+
+            <Link to="/" style={{
+              'margin': '1em 0',
+              'display': 'inline-block',
+              'background': '#303f9f',
+              'padding': '.5em 1.5em',
+              'textDecoration': 'none',
+              'color': '#fff',
+              'borderRadius': '.5em'
+            }}>Home</Link>
           </div>
         );
       }}
