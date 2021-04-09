@@ -1,8 +1,8 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import withRoot from './withRoot';
 import { Query } from 'react-apollo';
 import { gql } from 'apollo-boost';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { App } from './pages/App';
 import { Profile } from './pages/Profile';
 import Header from './components/Shared/Header'
@@ -11,21 +11,28 @@ import Error from './components/Shared/Error'
 
 export const UserContext = createContext();
 
+const AuthedRoute = (props) => {
+  const account = useContext(UserContext);
+  if (!account) {
+    return <Redirect to="/login"/>;
+  }
+  return <Route {...props} />;
+};
+
 const Root = () => (
   <Query query={ME_QUERY} fetchPolicy="cache-and-network">
     {({data, loading, error}) => {
       if (loading) return <Loading/>;
       if (error) return <Error error={error}/>;
       const currentUser = data.me;
-      // @todo: create authed routes
 
       return (
         <Router>
           <UserContext.Provider value={currentUser}>
             <Header currentUser={currentUser}/>
             <Switch>
-              <Route exact path="/" component={App}/>
-              <Route path="/profile/:id" component={Profile}/>
+              <AuthedRoute exact path="/" component={App}/>
+              <AuthedRoute path="/profile/:id" component={Profile}/>
             </Switch>
           </UserContext.Provider>
         </Router>

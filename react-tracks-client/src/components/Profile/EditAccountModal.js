@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Controller, useForm } from "react-hook-form";
-import { Mutation } from "react-apollo";
+import { Mutation, ApolloConsumer } from "react-apollo";
 import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ const EditAccountModal = ({user}) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const history = useHistory();
-  const submitFn = async (event, updateUser) => {
+  const submitFn = async (event, updateUser, client) => {
     event.preventDefault();
     updateUser({
       variables: {
@@ -50,6 +50,7 @@ const EditAccountModal = ({user}) => {
       }
     });
     localStorage.removeItem("authToken");
+    client.writeData({data: {isLoggedIn: false}});
     history.push("/");
   };
 
@@ -87,66 +88,70 @@ const EditAccountModal = ({user}) => {
               contentLabel="Example Modal"
             >
               <h2 ref={_subtitle => (subtitle = _subtitle)}>Edit Account</h2>
-              <form onSubmit={(event) => submitFn(event, updateUser)}
-                    style={{"display": "flex", "flexDirection": "column"}}>
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (<>
-                    <label htmlFor="username">Username</label>
-                    <input
+              <ApolloConsumer>
+                {client => (
+                  <form onSubmit={(event) => submitFn(event, updateUser, client)}
+                        style={{"display": "flex", "flexDirection": "column"}}>
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (<>
+                        <label htmlFor="username">Username</label>
+                        <input
+                          name="username"
+                          id="username"
+                          required
+                          onChange={event => {
+                            setUsername(event.target.value)
+                          }}
+                          value={username}
+                        />
+                      </>)}
                       name="username"
-                      id="username"
-                      required
-                      onChange={event => {
-                        setUsername(event.target.value)
-                      }}
-                      value={username}
+                      defaultValue={username}
                     />
-                  </>)}
-                  name="username"
-                  defaultValue={username}
-                />
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (<>
-                    <label htmlFor="password">Password</label>
-                    <input
-                      {...register("password", {required: true})}
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (<>
+                        <label htmlFor="password">Password</label>
+                        <input
+                          {...register("password", {required: true})}
+                          name="password"
+                          id="password"
+                          type="text"
+                          required
+                          onChange={event => {
+                            setPassword(event.target.value)
+                          }}
+                          value={password}
+                        />
+                      </>)}
                       name="password"
-                      id="password"
-                      type="text"
-                      required
-                      onChange={event => {
-                        setPassword(event.target.value)
-                      }}
-                      value={password}
+                      defaultValue={password}
                     />
-                  </>)}
-                  name="password"
-                  defaultValue={password}
-                />
-                <Controller
-                  control={control}
-                  render={({field: {onChange, value}}) => (<>
-                    <label htmlFor="email">Email</label>
-                    <input
+                    <Controller
+                      control={control}
+                      render={({field: {onChange, value}}) => (<>
+                        <label htmlFor="email">Email</label>
+                        <input
+                          name="email"
+                          id="email"
+                          type="text"
+                          required
+                          onChange={event => {
+                            setEmail(event.target.value)
+                          }}
+                          value={email}
+                        />
+                      </>)}
                       name="email"
-                      id="email"
-                      type="text"
-                      required
-                      onChange={event => {
-                        setEmail(event.target.value)
-                      }}
-                      value={email}
+                      defaultValue={email}
                     />
-                  </>)}
-                  name="email"
-                  defaultValue={email}
-                />
-                <input type="hidden" value={user.id}/>
-                <input type="submit"/>
-                <button onClick={closeModal}>close</button>
-              </form>
+                    <input type="hidden" value={user.id}/>
+                    <input type="submit"/>
+                    <button onClick={closeModal}>close</button>
+                  </form>
+                )}
+              </ApolloConsumer>
             </Modal>
           );
         }}
