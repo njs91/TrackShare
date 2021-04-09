@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import { ApolloConsumer } from "react-apollo";
-import { gql } from "apollo-boost";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import ClearIcon from "@material-ui/icons/Clear";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+import { SEARCH_TRACKS_QUERY } from "../../gql/queries";
 
 const SearchTracks = ({classes, setSearchResults}) => {
   const [search, setSearch] = useState("");
@@ -54,25 +54,6 @@ const SearchTracks = ({classes, setSearchResults}) => {
     </ApolloConsumer>
   );
 };
-
-const SEARCH_TRACKS_QUERY = gql`
-    query($search: String) {
-        tracks(search: $search) {
-            id
-            title
-            description
-            artist
-            url
-            likes {
-                id
-            }
-            postedBy {
-                id
-                username
-            }
-        }
-    }
-`;
 
 const styles = theme => ({
   root: {

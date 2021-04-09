@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { gql } from 'apollo-boost';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,6 +9,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Lock from '@material-ui/icons/Lock';
+import { LOGIN_MUTATION } from "../../gql/mutations";
 
 const Login = ({classes, setNewUser}) => {
   const [username, setUsername] = useState('');
@@ -36,7 +36,7 @@ const Login = ({classes, setNewUser}) => {
         <Typography variant='title'>Login</Typography>
         {/* below mutation needs to be login mutation; no email */}
         <Mutation mutation={LOGIN_MUTATION}>
-          {(tokenAuth, {loading, error, client, called}) => {
+          {(tokenAuth, {loading, client}) => {
             return (
               <form
                 className={classes.form}
@@ -80,14 +80,6 @@ const Login = ({classes, setNewUser}) => {
     </div>
   );
 };
-
-const LOGIN_MUTATION = gql`
-    mutation login($username: String!, $password: String!) {
-        tokenAuth(username: $username, password: $password) {
-            token
-        }
-    }
-`;
 
 const styles = (theme) => ({
   root: {

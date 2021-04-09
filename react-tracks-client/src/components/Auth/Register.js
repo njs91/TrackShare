@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import { gql } from 'apollo-boost';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +15,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Gavel from '@material-ui/icons/Gavel';
 import VerifiedUserTwoTone from '@material-ui/icons/VerifiedUserTwoTone';
+import { REGISTER_MUTATION } from "../../gql/mutations";
 
 const Register = ({classes, setNewUser}) => {
   const [username, setUsername] = useState('');
@@ -43,7 +43,7 @@ const Register = ({classes, setNewUser}) => {
         </Avatar>
         <Typography variant='headline'>Register</Typography>
         <Mutation mutation={REGISTER_MUTATION}>
-          {(createUser, {loading, error}) => {
+          {(createUser, {loading}) => {
             return (
               <form
                 className={classes.form}
@@ -119,17 +119,6 @@ const Register = ({classes, setNewUser}) => {
     </div>
   );
 };
-
-const REGISTER_MUTATION = gql`
-    mutation createUser($email: String!, $password: String!, $username: String!) {
-        createUser(username: $username, email: $email, password: $password) {
-            user {
-                username
-                email
-            }
-        }
-    }
-`;
 
 const styles = (theme) => ({
   root: {

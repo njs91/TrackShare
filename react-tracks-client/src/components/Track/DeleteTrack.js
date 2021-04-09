@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Mutation } from "react-apollo";
-import { gql } from "apollo-boost";
 import IconButton from "@material-ui/core/IconButton";
 import TrashIcon from "@material-ui/icons/DeleteForeverOutlined";
 import { UserContext } from "../../Root";
-import { GET_TRACKS } from "../../pages/App";
+import { GET_TRACKS } from "../../gql/queries";
+import { DELETE_TRACK_MUTATION } from "../../gql/mutations";
 
 const DeleteTrack = ({track}) => {
   const currentUser = useContext(UserContext);
@@ -42,13 +42,5 @@ const DeleteTrack = ({track}) => {
     )
   );
 };
-
-const DELETE_TRACK_MUTATION = gql`
-    mutation($trackId: Int!) {
-        deleteTrack(trackId: $trackId) {
-            trackId
-        }
-    }
-`;
 
 export default DeleteTrack;

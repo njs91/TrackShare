@@ -2,21 +2,8 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Controller, useForm } from "react-hook-form";
 import { Mutation, ApolloConsumer } from "react-apollo";
-import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
-
-const UPDATE_USER_MUTATION = gql`
-    mutation updateUser($userId: Int!, $email: String, $password: String, $username: String) {
-        updateUser(userId: $userId, email: $email, password: $password, username: $username) {
-            user {
-                id
-                email
-                password
-                username
-            }
-        }
-    }
-`;
+import { UPDATE_USER_MUTATION } from "../../gql/mutations";
 
 const customStyles = {
   content: {

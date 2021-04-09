@@ -1,13 +1,13 @@
 import React, { createContext, useContext } from 'react';
 import withRoot from './withRoot';
 import { Query } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { App } from './pages/App';
 import { Profile } from './pages/Profile';
 import Header from './components/Shared/Header'
 import Loading from './components/Shared/Loading'
 import Error from './components/Shared/Error'
+import { ME_QUERY } from "./gql/queries";
 
 export const UserContext = createContext();
 
@@ -40,20 +40,5 @@ const Root = () => (
     }}
   </Query>
 );
-
-export const ME_QUERY = gql`
-    {
-        me {
-            id
-            username
-            email
-            likeSet {
-                track {
-                    id
-                }
-            }
-        }
-    }
-`;
 
 export default withRoot(Root);

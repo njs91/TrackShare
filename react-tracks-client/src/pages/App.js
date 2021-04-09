@@ -4,8 +4,8 @@ import SearchTracks from "../components/Track/SearchTracks";
 import TrackList from "../components/Track/TrackList";
 import CreateTrack from "../components/Track/CreateTrack";
 import { Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
 import { Loading } from '../components/Shared/Loading'
+import { GET_TRACKS } from "../gql/queries";
 
 export const App = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -26,25 +26,6 @@ export const App = () => {
     </div>
   )
 };
-
-export const GET_TRACKS = gql`
-    query getTracks {
-        tracks {
-            id
-            title
-            description
-            artist
-            url
-            likes {
-                id
-            }
-            postedBy {
-                id
-                username
-            }
-        }
-    }
-`
 
 const styles = (theme) => ({
   container: {

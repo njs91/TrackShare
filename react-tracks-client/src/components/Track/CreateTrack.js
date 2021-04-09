@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Mutation } from "react-apollo";
-import { gql } from "apollo-boost";
 import axios from "axios";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,8 +15,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
-import { GET_TRACKS } from "../../pages/App";
 import Error from "../Shared/Error";
+import { CREATE_TRACK_MUTATION } from "../../gql/mutations";
+import { GET_TRACKS } from "../../gql/queries";
 
 const CreateTrack = ({classes}) => {
   const [open, setOpen] = useState(false);
@@ -195,27 +195,6 @@ const CreateTrack = ({classes}) => {
     </>
   );
 };
-
-const CREATE_TRACK_MUTATION = gql`
-    mutation($title: String!, $description: String!, $artist: String!, $url: String!) {
-        createTrack(title: $title, description: $description, artist: $artist, url: $url) {
-            track {
-                id
-                title
-                description
-                artist
-                url
-                likes {
-                    id
-                }
-                postedBy {
-                    id
-                    username
-                }
-            }
-        }
-    }
-`;
 
 const styles = theme => ({
   container: {

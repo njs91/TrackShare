@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { Mutation } from "react-apollo";
-import { gql } from "apollo-boost";
 import axios from "axios";
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +17,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 import { UserContext } from "../../Root";
 import Error from "../Shared/Error";
+import { UPDATE_TRACK_MUTATION } from "../../gql/mutations";
 
 const UpdateTrack = ({classes, track}) => {
   const currentUser = useContext(UserContext);
@@ -91,7 +91,7 @@ const UpdateTrack = ({classes, track}) => {
             setFile("");
           }}
         >
-          {(updateTrack, {loading, error}) => {
+          {(updateTrack, {error}) => {
             if (error) return <Error error={error}/>;
 
             return (
@@ -190,33 +190,6 @@ const UpdateTrack = ({classes, track}) => {
     )
   );
 };
-
-const UPDATE_TRACK_MUTATION = gql`
-    mutation($trackId: Int!, $title: String, $url: String, $description: String, $artist: String) {
-        updateTrack(
-            trackId: $trackId
-            title: $title
-            url: $url
-            description: $description
-            artist: $artist
-        ) {
-            track {
-                id
-                title
-                description
-                artist
-                url
-                likes {
-                    id
-                }
-                postedBy {
-                    id
-                    username
-                }
-            }
-        }
-    }
-`;
 
 const styles = theme => ({
   container: {

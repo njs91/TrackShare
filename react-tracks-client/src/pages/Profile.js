@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Query } from "react-apollo";
-import { gql } from "apollo-boost";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -13,6 +12,7 @@ import Error from "../components/Shared/Error";
 import Loading from "../components/Shared/Loading";
 import { UserContext } from "../Root";
 import EditAccountModal from "../components/Profile/EditAccountModal";
+import { PROFILE_QUERY } from "../gql/queries";
 
 export const Profile = ({match}) => {
   const id = match.params.id;
@@ -118,41 +118,6 @@ export const Profile = ({match}) => {
     </Query>
   );
 };
-
-const PROFILE_QUERY = gql`
-    query($id: Int!) {
-        user(id: $id) {
-            id
-            username
-            dateJoined
-            email
-            password
-            likeSet {
-                id
-                track {
-                    id
-                    title
-                    url
-                    likes {
-                        id
-                    }
-                    postedBy {
-                        id
-                        username
-                    }
-                }
-            }
-            trackSet {
-                id
-                title
-                url
-                likes {
-                    id
-                }
-            }
-        }
-    }
-`;
 
 const styles = theme => ({
   paper: {
