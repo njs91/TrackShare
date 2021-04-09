@@ -34,7 +34,7 @@ Modal.setAppElement('#root')
 const EditAccountModal = ({user}) => {
   var subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  const {control, label, register, handleSubmit, watch, formState: {errors}} = useForm();
+  const {control, register} = useForm();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
@@ -50,8 +50,6 @@ const EditAccountModal = ({user}) => {
       }
     });
     localStorage.removeItem("authToken");
-    {/* @todo: redirect to logout page */
-    }
     history.push("/");
   };
 
@@ -80,8 +78,6 @@ const EditAccountModal = ({user}) => {
       >
         {(updateUser, {loading, error}) => {
           // if (error) return <Error error={error} />;
-          {/* @todo: replace this syntax? */
-          }
           return (
             <Modal
               isOpen={modalIsOpen}
@@ -100,6 +96,7 @@ const EditAccountModal = ({user}) => {
                     <input
                       name="username"
                       id="username"
+                      required
                       onChange={event => {
                         setUsername(event.target.value)
                       }}
@@ -109,15 +106,16 @@ const EditAccountModal = ({user}) => {
                   name="username"
                   defaultValue={username}
                 />
-                {/* @todo: make password blank and required */}
                 <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (<>
                     <label htmlFor="password">Password</label>
                     <input
+                      {...register("password", {required: true})}
                       name="password"
                       id="password"
                       type="text"
+                      required
                       onChange={event => {
                         setPassword(event.target.value)
                       }}
@@ -135,6 +133,7 @@ const EditAccountModal = ({user}) => {
                       name="email"
                       id="email"
                       type="text"
+                      required
                       onChange={event => {
                         setEmail(event.target.value)
                       }}
