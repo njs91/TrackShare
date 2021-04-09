@@ -16,6 +16,9 @@ export const App = () => {
   return (
     <div className={styles.container}>
       <h1 style={{'marginLeft': '1em'}}>Home</h1>
+      <p style={{'marginLeft': '1em'}}>Welcome to TrackShare. Search, play, like or upload a song <u>(click the +
+        button</u>, bottom right).
+        View your profile for more details. You can only edit your own songs from the list below.</p>
       <SearchTracks setSearchResults={setSearchResults}/>
       <CreateTrack/>
       {
