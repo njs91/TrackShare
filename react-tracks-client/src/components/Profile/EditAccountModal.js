@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Controller, useForm } from "react-hook-form";
 import { Mutation } from "react-apollo";
 import { gql } from "apollo-boost";
+import { useHistory } from 'react-router-dom';
 
 const UPDATE_USER_MUTATION = gql`
     mutation updateUser($userId: Int!, $email: String, $password: String, $username: String) {
@@ -37,6 +38,7 @@ const EditAccountModal = ({user}) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
+  const history = useHistory();
   const submitFn = async (event, updateUser) => {
     event.preventDefault();
     updateUser({
@@ -47,6 +49,10 @@ const EditAccountModal = ({user}) => {
         username: username
       }
     });
+    localStorage.removeItem("authToken");
+    {/* @todo: redirect to logout page */
+    }
+    history.push("/");
   };
 
   function openModal() {
@@ -90,7 +96,7 @@ const EditAccountModal = ({user}) => {
                 <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (<>
-                    <label for="username">Username</label>
+                    <label htmlFor="username">Username</label>
                     <input
                       name="username"
                       id="username"
@@ -104,11 +110,10 @@ const EditAccountModal = ({user}) => {
                   defaultValue={username}
                 />
                 {/* @todo: make password blank and required */}
-                {/* @todo: clear authToken from local storage on submit */}
                 <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (<>
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                     <input
                       name="password"
                       id="password"
@@ -125,7 +130,7 @@ const EditAccountModal = ({user}) => {
                 <Controller
                   control={control}
                   render={({field: {onChange, value}}) => (<>
-                    <label for="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                       name="email"
                       id="email"
