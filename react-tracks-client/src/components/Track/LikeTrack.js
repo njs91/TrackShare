@@ -4,27 +4,26 @@ import { gql } from "apollo-boost";
 import withStyles from "@material-ui/core/styles/withStyles";
 import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-
 import { UserContext, ME_QUERY } from "../../Root";
 
-const LikeTrack = ({ classes, trackId, likeCount }) => {
+const LikeTrack = ({classes, trackId, likeCount}) => {
   const currentUser = useContext(UserContext);
 
   const handleDisableLikedTrack = () => {
     const userLikes = currentUser.likeSet;
     const isTrackLiked =
-      userLikes.findIndex(({ track }) => track.id === trackId) > -1;
+      userLikes.findIndex(({track}) => track.id === trackId) > -1;
     return isTrackLiked;
   };
 
   return (
     <Mutation
       mutation={CREATE_LIKE_MUTATION}
-      variables={{ trackId }}
+      variables={{trackId}}
       onCompleted={data => {
-        console.log({ data });
+        console.log({data});
       }}
-      refetchQueries={() => [{ query: ME_QUERY }]}
+      refetchQueries={() => [{query: ME_QUERY}]}
     >
       {createLike => (
         <IconButton
@@ -36,7 +35,7 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
           disabled={handleDisableLikedTrack()}
         >
           {likeCount}
-          <ThumbUpIcon className={classes.icon} />
+          <ThumbUpIcon className={classes.icon}/>
         </IconButton>
       )}
     </Mutation>
@@ -44,16 +43,16 @@ const LikeTrack = ({ classes, trackId, likeCount }) => {
 };
 
 const CREATE_LIKE_MUTATION = gql`
-  mutation($trackId: Int!) {
-    createLike(trackId: $trackId) {
-      track {
-        id
-        likes {
-          id
+    mutation($trackId: Int!) {
+        createLike(trackId: $trackId) {
+            track {
+                id
+                likes {
+                    id
+                }
+            }
         }
-      }
     }
-  }
 `;
 
 const styles = theme => ({

@@ -16,11 +16,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
-
 import { GET_TRACKS } from "../../pages/App";
 import Error from "../Shared/Error";
 
-const CreateTrack = ({ classes }) => {
+const CreateTrack = ({classes}) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -58,10 +57,10 @@ const CreateTrack = ({ classes }) => {
     }
   };
 
-  const handleUpdateCache = (cache, { data: { createTrack } }) => {
-    const data = cache.readQuery({ query: GET_TRACKS });
+  const handleUpdateCache = (cache, {data: {createTrack}}) => {
+    const data = cache.readQuery({query: GET_TRACKS});
     const tracks = data.tracks.concat(createTrack.track);
-    cache.writeQuery({ query: GET_TRACKS, data: { tracks } });
+    cache.writeQuery({query: GET_TRACKS, data: {tracks}});
   };
 
   const handleSubmit = async (event, createTrack) => {
@@ -69,7 +68,7 @@ const CreateTrack = ({ classes }) => {
     setSubmitting(true);
     // upload our audio file, get returned url from API
     const uploadedUrl = await handleAudioUpload();
-    createTrack({ variables: { title, description, artist, url: uploadedUrl } });
+    createTrack({variables: {title, description, artist, url: uploadedUrl}});
   };
 
   return (
@@ -81,14 +80,14 @@ const CreateTrack = ({ classes }) => {
         className={classes.fab}
         color="secondary"
       >
-        {open ? <ClearIcon /> : <AddIcon />}
+        {open ? <ClearIcon/> : <AddIcon/>}
       </Button>
 
       {/* Create Track Dialog */}
       <Mutation
         mutation={CREATE_TRACK_MUTATION}
         onCompleted={data => {
-          console.log({ data });
+          console.log({data});
           setSubmitting(false);
           setOpen(false);
           setTitle("");
@@ -99,8 +98,8 @@ const CreateTrack = ({ classes }) => {
         update={handleUpdateCache}
         // refetchQueries={() => [{ query: GET_TRACKS }]}
       >
-        {(createTrack, { loading, error }) => {
-          if (error) return <Error error={error} />;
+        {(createTrack, {loading, error}) => {
+          if (error) return <Error error={error}/>;
 
           return (
             <Dialog open={open} className={classes.dialog}>
@@ -156,7 +155,7 @@ const CreateTrack = ({ classes }) => {
                         className={classes.button}
                       >
                         *Audio File
-                        <LibraryMusicIcon className={classes.icon} />
+                        <LibraryMusicIcon className={classes.icon}/>
                       </Button>
                       {file && file.name}
                       <FormHelperText>{fileError}</FormHelperText>
@@ -182,7 +181,7 @@ const CreateTrack = ({ classes }) => {
                     className={classes.save}
                   >
                     {submitting ? (
-                      <CircularProgress className={classes.save} size={24} />
+                      <CircularProgress className={classes.save} size={24}/>
                     ) : (
                       "Add Track"
                     )}
@@ -198,24 +197,24 @@ const CreateTrack = ({ classes }) => {
 };
 
 const CREATE_TRACK_MUTATION = gql`
-  mutation($title: String!, $description: String!, $artist: String!, $url: String!) {
-    createTrack(title: $title, description: $description, artist: $artist, url: $url) {
-      track {
-        id
-        title
-        description
-        artist
-        url
-        likes {
-          id
+    mutation($title: String!, $description: String!, $artist: String!, $url: String!) {
+        createTrack(title: $title, description: $description, artist: $artist, url: $url) {
+            track {
+                id
+                title
+                description
+                artist
+                url
+                likes {
+                    id
+                }
+                postedBy {
+                    id
+                    username
+                }
+            }
         }
-        postedBy {
-          id
-          username
-        }
-      }
     }
-  }
 `;
 
 const styles = theme => ({

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mutation } from 'react-apollo'; // so we can execute mutations
+import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
@@ -11,7 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Lock from '@material-ui/icons/Lock';
 
-const Login = ({ classes, setNewUser }) => {
+const Login = ({classes, setNewUser}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,21 +24,19 @@ const Login = ({ classes, setNewUser }) => {
       },
     });
     localStorage.setItem('authToken', res.data.tokenAuth.token);
-    client.writeData({ data: { isLoggedIn: true } }) // sets isLoggedIn (apollo provider state) to true
-    console.log('res', res);
-    // setOpen(true);
+    client.writeData({data: {isLoggedIn: true}}) // sets isLoggedIn (apollo provider state) to true
   };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <Lock />
+          <Lock/>
         </Avatar>
         <Typography variant='title'>Login</Typography>
         {/* below mutation needs to be login mutation; no email */}
         <Mutation mutation={LOGIN_MUTATION}>
-          {(tokenAuth, { loading, error, client, called }) => {
+          {(tokenAuth, {loading, error, client, called}) => {
             return (
               <form
                 className={classes.form}
@@ -84,11 +82,11 @@ const Login = ({ classes, setNewUser }) => {
 };
 
 const LOGIN_MUTATION = gql`
-  mutation login($username: String!, $password: String!) {
-    tokenAuth(username: $username, password: $password) {
-      token
+    mutation login($username: String!, $password: String!) {
+        tokenAuth(username: $username, password: $password) {
+            token
+        }
     }
-  }
 `;
 
 const styles = (theme) => ({

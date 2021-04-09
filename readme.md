@@ -2,7 +2,8 @@
 
 ## Introduction
 
-Full-stack project that comprises of a front-end app using react and a back-end app using python. Both ends communicate via a GraphQL API.
+Full-stack project that comprises of a front-end app using react and a back-end app using python. Both ends communicate
+via a GraphQL API.
 
 Create an account and upload, play, search for and like music files.
 
@@ -24,7 +25,7 @@ pipenv shell
 python manage.py runserver
 ```
 
-Run the above command from within the app folder.
+Then you should be able to visit http://127.0.0.1:8000/graphql/.
 
 **Installing the front-end app**:
 
@@ -42,6 +43,8 @@ Run with:
 npm start
 ```
 
+Then you should be able to visit http://localhost:3000/.
+
 ## Troubleshooting
 
 **Using the correct version of python:**
@@ -58,4 +61,5 @@ Issues often caused from running other versions of python 3.8 or pyjwt 1.7.1.
 
 **Error “’str' object has no attribute 'decode’”:**
 
-Run ```pip list``` to check version of pyjwt, and run ```pip install PyJWT==1.7.1``` to install the correct version if the version is not 1.7.1.
+Run ```pip list``` to check version of pyjwt, and run ```pip install PyJWT==1.7.1``` to install the correct version if
+the version is not 1.7.1.

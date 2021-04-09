@@ -1,13 +1,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-export const Loading = ({ classes }) => (<>
-    <div>Loading...</div>
-    {/*<div className={classes.root}>
-        {CircularProgress className={styles.progress}/>}
-        Loading...
-    </div>);*/}
-    </>)
+export const Loading = () => (<div>Loading...</div>)
 
 const styles = (theme) => ({
   root: {

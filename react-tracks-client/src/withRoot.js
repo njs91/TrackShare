@@ -32,7 +32,7 @@ function withRoot(Component) {
       <MuiThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         {/* https://material-ui.com/getting-started/usage/#cssbaseline */}
-        <CssBaseline />
+        <CssBaseline/>
         <Component {...props} />
       </MuiThemeProvider>
     );

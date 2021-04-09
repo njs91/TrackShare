@@ -10,20 +10,18 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link } from "react-router-dom";
-
 import AudioPlayer from "../Shared/AudioPlayer";
 import LikeTrack from "./LikeTrack";
 import DeleteTrack from "./DeleteTrack";
 import UpdateTrack from "./UpdateTrack";
 
-const TrackList = ({ classes, tracks }) => (
+const TrackList = ({classes, tracks}) => (
   <List>
-    {console.log('tracks', tracks)}
     {tracks.map(track => (
       <ExpansionPanel key={track.id}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
           <ListItem className={classes.root}>
-            <LikeTrack trackId={track.id} likeCount={track.likes.length} />
+            <LikeTrack trackId={track.id} likeCount={track.likes.length}/>
             <ListItemText
               primaryTypographyProps={{
                 variant: "subheading",
@@ -39,15 +37,16 @@ const TrackList = ({ classes, tracks }) => (
                 </Link>
               }
             />
-            <AudioPlayer url={track.url} />
+            <AudioPlayer url={track.url}/>
           </ListItem>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <Typography variant="body1">{track.artist && <>Artist: {track.artist} <br/></>}{track.description}</Typography>
+          <Typography variant="body1">{track.artist && <>Artist: {track.artist}
+            <br/></>}{track.description}</Typography>
         </ExpansionPanelDetails>
         <ExpansionPanelActions>
-          <UpdateTrack track={track} />
-          <DeleteTrack track={track} />
+          <UpdateTrack track={track}/>
+          <DeleteTrack track={track}/>
         </ExpansionPanelActions>
       </ExpansionPanel>
     ))}

@@ -5,10 +5,10 @@ import ExitToApp from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const Signout = ({ classes }) => {
+const Signout = ({classes}) => {
   const handleSignout = client => {
     localStorage.removeItem("authToken");
-    client.writeData({ data: { isLoggedIn: false } });
+    client.writeData({data: {isLoggedIn: false}});
     console.log("Signed out user", client);
   };
 
@@ -23,7 +23,7 @@ const Signout = ({ classes }) => {
           >
             Signout
           </Typography>
-          <ExitToApp className={classes.buttonIcon} color="secondary" />
+          <ExitToApp className={classes.buttonIcon} color="secondary"/>
         </Button>
       )}
     </ApolloConsumer>

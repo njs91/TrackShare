@@ -8,13 +8,13 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Signout from "../Auth/Signout";
 
-const Header = ({ classes, currentUser }) => {
+const Header = ({classes, currentUser}) => {
   return (
     <AppBar position="static" className={classes.root}>
       <Toolbar>
         {/* Title / Logo */}
         <Link to="/" className={classes.grow}>
-          <RadioIcon className={classes.logo} color="secondary" />
+          <RadioIcon className={classes.logo} color="secondary"/>
           <Typography variant="headline" color="secondary" noWrap>
             TrackShare
           </Typography>
@@ -23,7 +23,7 @@ const Header = ({ classes, currentUser }) => {
         {/* Auth User Info */}
         {currentUser && (
           <Link to={`/profile/${currentUser.id}`} className={classes.grow}>
-            <FaceIcon className={classes.faceIcon} />
+            <FaceIcon className={classes.faceIcon}/>
             <Typography variant="headline" className={classes.username} noWrap>
               View {currentUser.username}'s Profile
             </Typography>
@@ -31,7 +31,7 @@ const Header = ({ classes, currentUser }) => {
         )}
 
         {/* Signout Button */}
-        <Signout />
+        <Signout/>
       </Toolbar>
     </AppBar>
   );

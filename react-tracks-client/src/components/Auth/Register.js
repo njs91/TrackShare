@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mutation } from 'react-apollo'; // so we can execute mutations
+import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Gavel from '@material-ui/icons/Gavel';
 import VerifiedUserTwoTone from '@material-ui/icons/VerifiedUserTwoTone';
 
-const Register = ({ classes, setNewUser }) => {
+const Register = ({classes, setNewUser}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,11 +39,11 @@ const Register = ({ classes, setNewUser }) => {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <Gavel />
+          <Gavel/>
         </Avatar>
         <Typography variant='headline'>Register</Typography>
         <Mutation mutation={REGISTER_MUTATION}>
-          {(createUser, { loading, error }) => {
+          {(createUser, {loading, error}) => {
             return (
               <form
                 className={classes.form}
@@ -101,7 +101,7 @@ const Register = ({ classes, setNewUser }) => {
       <Dialog open={open} disableBackdropClick={true}>
         {/* only opens when open prop is true */}
         <DialogTitle>
-          <VerifiedUserTwoTone className={classes.icon} />
+          <VerifiedUserTwoTone className={classes.icon}/>
           New Account
         </DialogTitle>
         <DialogContent>
@@ -121,14 +121,14 @@ const Register = ({ classes, setNewUser }) => {
 };
 
 const REGISTER_MUTATION = gql`
-  mutation createUser($email: String!, $password: String!, $username: String!) {
-    createUser(username: $username, email: $email, password: $password) {
-      user {
-        username
-        email
-      }
+    mutation createUser($email: String!, $password: String!, $username: String!) {
+        createUser(username: $username, email: $email, password: $password) {
+            user {
+                username
+                email
+            }
+        }
     }
-  }
 `;
 
 const styles = (theme) => ({

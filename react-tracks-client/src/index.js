@@ -14,14 +14,14 @@ const client = new ApolloClient({
   request: operation => { // set headers
     const token = localStorage.getItem('authToken') || ""; // get token or ""
     operation.setContext({
-        headers: {
-            Authorization: `JWT ${token}` // set in header
-        }
+      headers: {
+        Authorization: `JWT ${token}` // set in header
+      }
     })
   },
   clientState: {
     defaults: {
-        isLoggedIn: !!localStorage.getItem('authToken') // true/false if they're logged in or not; !! = to bool
+      isLoggedIn: !!localStorage.getItem('authToken') // true/false if they're logged in or not; !! = to bool
     }
   }
 });
@@ -35,7 +35,7 @@ const IS_LOGGED_IN_QUERY = gql`
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Query query={IS_LOGGED_IN_QUERY}>
-        {({ data }) => data.isLoggedIn ? <Root /> : <Auth />}
+      {({data}) => data.isLoggedIn ? <Root/> : <Auth/>}
     </Query>
   </ApolloProvider>,
   document.getElementById('root')

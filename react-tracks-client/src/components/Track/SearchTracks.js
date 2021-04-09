@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-const SearchTracks = ({ classes, setSearchResults }) => {
+const SearchTracks = ({classes, setSearchResults}) => {
   const [search, setSearch] = useState("");
   const inputEl = useRef();
 
@@ -19,16 +19,11 @@ const SearchTracks = ({ classes, setSearchResults }) => {
   };
 
   const handleSubmit = async (event, client) => {
-    console.log('search', search);
     event.preventDefault();
-    console.log('test')
     const res = await client.query({
       query: SEARCH_TRACKS_QUERY,
-      variables: {search} // error?
-//      variables: [ search ] // error?
-//      variables: { search }  // error?
+      variables: {search}
     });
-    console.log('res', res);
     setSearchResults(res.data.tracks);
   };
 
@@ -38,7 +33,7 @@ const SearchTracks = ({ classes, setSearchResults }) => {
         <form onSubmit={event => handleSubmit(event, client)}>
           <Paper className={classes.root} elevation={1}>
             <IconButton onClick={clearSearchInput}>
-              <ClearIcon />
+              <ClearIcon/>
             </IconButton>
             <TextField
               fullWidth
@@ -51,7 +46,7 @@ const SearchTracks = ({ classes, setSearchResults }) => {
               inputRef={inputEl}
             />
             <IconButton type="submit">
-              <SearchIcon />
+              <SearchIcon/>
             </IconButton>
           </Paper>
         </form>
@@ -61,22 +56,22 @@ const SearchTracks = ({ classes, setSearchResults }) => {
 };
 
 const SEARCH_TRACKS_QUERY = gql`
-  query($search: String) {
-    tracks(search: $search) {
-      id
-      title
-      description
-      artist
-      url
-      likes {
-        id
-      }
-      postedBy {
-        id
-        username
-      }
+    query($search: String) {
+        tracks(search: $search) {
+            id
+            title
+            description
+            artist
+            url
+            likes {
+                id
+            }
+            postedBy {
+                id
+                username
+            }
+        }
     }
-  }
 `;
 
 const styles = theme => ({

@@ -19,7 +19,7 @@ import LibraryMusicIcon from "@material-ui/icons/LibraryMusic";
 import { UserContext } from "../../Root";
 import Error from "../Shared/Error";
 
-const UpdateTrack = ({ classes, track }) => {
+const UpdateTrack = ({classes, track}) => {
   const currentUser = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(track.title);
@@ -66,7 +66,7 @@ const UpdateTrack = ({ classes, track }) => {
     // upload our audio file, get returned url from API
     const uploadedUrl = await handleAudioUpload();
     updateTrack({
-      variables: { trackId: track.id, title, description, artist, url: uploadedUrl }
+      variables: {trackId: track.id, title, description, artist, url: uploadedUrl}
     });
   };
 
@@ -75,14 +75,14 @@ const UpdateTrack = ({ classes, track }) => {
       <>
         {/* Update Track Button */}
         <IconButton onClick={() => setOpen(true)}>
-          <EditIcon />
+          <EditIcon/>
         </IconButton>
 
         {/* Update Track Dialog */}
         <Mutation
           mutation={UPDATE_TRACK_MUTATION}
           onCompleted={data => {
-            console.log({ data });
+            console.log({data});
             setSubmitting(false);
             setOpen(false);
             setTitle("");
@@ -91,8 +91,8 @@ const UpdateTrack = ({ classes, track }) => {
             setFile("");
           }}
         >
-          {(updateTrack, { loading, error }) => {
-            if (error) return <Error error={error} />;
+          {(updateTrack, {loading, error}) => {
+            if (error) return <Error error={error}/>;
 
             return (
               <Dialog open={open} className={classes.dialog}>
@@ -139,7 +139,7 @@ const UpdateTrack = ({ classes, track }) => {
                         accept="audio/mp3,audio/wav"
                         className={classes.input}
                         onChange={handleAudioChange}
-//                        value={file}
+                        // value={file}
                       />
                       <label htmlFor="audio">
                         <Button
@@ -149,7 +149,7 @@ const UpdateTrack = ({ classes, track }) => {
                           className={classes.button}
                         >
                           *Audio File
-                          <LibraryMusicIcon className={classes.icon} />
+                          <LibraryMusicIcon className={classes.icon}/>
                         </Button>
                         {file && file.name}
                         <FormHelperText>{fileError}</FormHelperText>
@@ -175,7 +175,7 @@ const UpdateTrack = ({ classes, track }) => {
                       className={classes.save}
                     >
                       {submitting ? (
-                        <CircularProgress className={classes.save} size={24} />
+                        <CircularProgress className={classes.save} size={24}/>
                       ) : (
                         "Update Track"
                       )}
@@ -192,30 +192,30 @@ const UpdateTrack = ({ classes, track }) => {
 };
 
 const UPDATE_TRACK_MUTATION = gql`
-  mutation($trackId: Int!, $title: String, $url: String, $description: String, $artist: String) {
-    updateTrack(
-      trackId: $trackId
-      title: $title
-      url: $url
-      description: $description
-      artist: $artist
-    ) {
-      track {
-        id
-        title
-        description
-        artist
-        url
-        likes {
-          id
+    mutation($trackId: Int!, $title: String, $url: String, $description: String, $artist: String) {
+        updateTrack(
+            trackId: $trackId
+            title: $title
+            url: $url
+            description: $description
+            artist: $artist
+        ) {
+            track {
+                id
+                title
+                description
+                artist
+                url
+                likes {
+                    id
+                }
+                postedBy {
+                    id
+                    username
+                }
+            }
         }
-        postedBy {
-          id
-          username
-        }
-      }
     }
-  }
 `;
 
 const styles = theme => ({
